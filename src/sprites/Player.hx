@@ -13,7 +13,10 @@ class Player extends h2d.Bitmap {
 
     public function new(screen:Screen, spritesheet:h2d.Tile)
     {
-        var tile = spritesheet.sub(16, 0, 32, 16);
+        width = 32;
+        height = 16;
+        
+        var tile = spritesheet.sub(16, 0, width, height);
         super(tile, screen);
         init();
         createBullets(screen, spritesheet);
@@ -38,7 +41,7 @@ class Player extends h2d.Bitmap {
         for (i in 0 ... MAX_PLAYER_SHOTS) {
             if (!bullets[i].visible) {
                 bullets[i].x = x + 32;
-                bullets[i].y = y + 8; 
+                bullets[i].y = y + 13; 
                 bullets[i].visible = true;
                 return;
             }
@@ -60,6 +63,8 @@ class Player extends h2d.Bitmap {
         var dx:Int = 0;
         var dy:Int = 0;
 
+        var scene:h2d.Scene = getScene();
+
         if(hxd.Key.isDown(hxd.Key.LEFT)) dx = -1;
         if(hxd.Key.isDown(hxd.Key.RIGHT)) dx = 1;
         if(hxd.Key.isDown(hxd.Key.UP)) dy = -1;
@@ -74,5 +79,7 @@ class Player extends h2d.Bitmap {
 
         if (x < 0) x = 0;
         if (y < 0) y = 0;
+        if (x + width > scene.width) x = scene.width - width;
+        if (y + height > scene.height) y = scene.height - height;
     }
 }

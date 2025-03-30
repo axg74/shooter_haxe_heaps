@@ -6,7 +6,7 @@ class PlayerBullet extends h2d.Bitmap {
     public function new(screen:Screen, tile:h2d.Tile)
     {
         super(tile, screen);
-        speed = 400;
+        speed = 300;
         x = 0;
         y = 50;
         visible = false;
@@ -14,7 +14,7 @@ class PlayerBullet extends h2d.Bitmap {
 
     public function update(dt: Float) {
         if (!visible) return;
-        
+
         var scene:h2d.Scene = getScene();
 
         x += speed * dt;
