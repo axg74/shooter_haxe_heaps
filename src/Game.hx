@@ -9,12 +9,15 @@ class Game extends hxd.App {
 
     public static final instance: Game = new Game();
     public var screen: Screen;
+    public var bgColor:Int = 0x000055;
 
     public function setScreen(screen:Screen) {
         setScene(screen);
         this.screen = screen;
         screen.init();
-        engine.fullScreen = false;        
+
+        engine.fullScreen = false;    
+        engine.backgroundColor = bgColor;    
     }
     
     override function init() {
