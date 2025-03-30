@@ -13,6 +13,13 @@ class PlayerBullet extends h2d.Bitmap {
     }
 
     public function update(dt: Float) {
+        if (!visible) return;
+        
+        var scene:h2d.Scene = getScene();
+
         x += speed * dt;
+        if (x > scene.width) {
+            visible = false;
+        }
     }
 }

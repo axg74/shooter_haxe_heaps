@@ -3,6 +3,8 @@ package src.sprites;
 import src.sprites.PlayerBullet;
 
 class Player extends h2d.Bitmap {
+    private static final MAX_PLAYER_SHOTS:Int = 30;
+
     private var score:Int;
     private var level:Int;
     private var lives:Int;
@@ -18,14 +20,29 @@ class Player extends h2d.Bitmap {
     }
 
     private function createBullets(screen:Screen, spritesheet:h2d.Tile) {
-        for (i in 0 ... 20) {
+        for (i in 0 ... MAX_PLAYER_SHOTS) {
             var tile = spritesheet.sub(48, 0, 8, 3);
             bullets.push(new PlayerBullet(screen, tile));
         }
     }
 
     public function updateBullets(dt:Float) {
-        bullets[0].update(dt);
+        for (i in 0 ... MAX_PLAYER_SHOTS) {
+            if (bullets[i].visible) {
+                bullets[i].update(dt);
+            }
+        }
+    }
+
+    private function shoot() {
+        for (i in 0 ... MAX_PLAYER_SHOTS) {
+            if (!bullets[i].visible) {
+                bullets[i].x = x + 32;
+                bullets[i].y = y + 8; 
+                bullets[i].visible = true;
+                return;
+            }
+        }
     }
 
     public function init() {
@@ -48,10 +65,8 @@ class Player extends h2d.Bitmap {
         if(hxd.Key.isDown(hxd.Key.UP)) dy = -1;
         if(hxd.Key.isDown(hxd.Key.DOWN)) dy = 1;
 
-        if(hxd.Key.isReleased((hxd.Key.D))) {
-            bullets[0].x = x;
-            bullets[0].y = y;
-            bullets[0].visible = true;
+        if(hxd.Key.isPressed((hxd.Key.D))) {
+            shoot();
         }
 
         x += dx * speed * dt;
