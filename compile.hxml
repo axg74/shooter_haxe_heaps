@@ -1,0 +1,8 @@
+-cp src
+-main Main
+-lib heaps
+-lib format
+-lib hlsdl
+-hl hello.hl
+-D windowSize=960x720
+-D windowTitle=shoot em up
